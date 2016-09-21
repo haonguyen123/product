@@ -31,7 +31,7 @@ public class ProductDAL extends connect {
     private final String REPORT_PRODUCT = "INSERT INTO report_product (product_id,subject,details ) VALUES (?,?,?)";
     private final String GET_REPOST = "SELECT * FROM report_product";
     private final String COMMENT = "INSERT INTO comment (id_product ,comment ,poster_id , created ) VALUES (?,?,?,now()";
-    private final String LIST_COMMENT = "SELECT cm.*, pr.name,pr.described,sl.name_seller,sl.avatar FROM  mydb.comment cm JOIN mydb.product pr on pr.id = cm.id_product JOIN mydb.seller sl on sl.id=cm.poster_id ";
+    private final String LIST_COMMENT = "SELECT cm.*, pr.name,pr.described,sl.name_seller,sl.avatar FROM  mydb.comment cm JOIN mydb.product pr on pr.id = cm.id_product JOIN mydb.seller sl on sl.id=cm.poster_id WHERE cm.id_product = ? ";
     public ProductDAL() {
     }
     public List<Product> get_all() {
@@ -117,8 +117,7 @@ public class ProductDAL extends connect {
             ps.setDouble(5, product.getPrice_percent());
             int rs = ps.executeUpdate();
             if(rs > 0){
-                ResultSet rs1 = ps.executeQuery();
-                product.setId(rs1.getInt("id"));
+                System.out.println("thanh conf");
             }
             else {
                 System.out.println("LOI");
@@ -237,11 +236,12 @@ public class ProductDAL extends connect {
         }
        return message;
     }
-    public List<Comment> get_all_comment() {
+    public List<Comment> get_all_comment(int id) {
         List<Comment> all = new ArrayList<Comment>();
         try {
             getConnect();
             PreparedStatement ps = con.prepareStatement(LIST_COMMENT);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs!=null ){
                 while( rs.next()){

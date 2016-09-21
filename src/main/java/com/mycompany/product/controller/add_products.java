@@ -50,9 +50,9 @@ public class add_products {
 		
 		return product_id.add_comment(comment);
 	}
-      public List<Comment> getallcomment() {
+      public List<Comment> getallcomment(int id) {
 		
-		return product_id.get_all_comment();
+		return product_id.get_all_comment(id);
 	}
 //    public static void main(String[] args) {
 //        add_products b = new add_products();

@@ -84,12 +84,12 @@ public class CtoFService {
             add_products a = new add_products();
             return a.comment(comment);
         }
-        @Path("/comment")
+        @Path("/comment/{id}")
         @GET
 	@Produces(MediaType.APPLICATION_XML)
-	public List<Comment> getallcomment() { 
+	public List<Comment> getallcomment(@PathParam("id") int id) { 
             add_products a = new add_products();
-            return a.getallcomment();
+            return a.getallcomment(id);
         }
 	
 }

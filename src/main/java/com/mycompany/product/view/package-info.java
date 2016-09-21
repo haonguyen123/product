@@ -5,7 +5,7 @@
  */
 @XmlSchema(elementFormDefault = XmlNsForm.QUALIFIED)
 @XmlAccessorType(XmlAccessType.FIELD)
-package com.mycompany.product.api;
+package com.mycompany.product.view;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
