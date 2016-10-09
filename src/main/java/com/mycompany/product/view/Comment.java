@@ -16,41 +16,44 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Comment {
     @XmlElement
-    int id_comment;
+    int id;
     @XmlElement
-    int id_product;
+    String message;
     @XmlElement
     String comment;
     @XmlElement
-    Seller poster;
+    String created;
     @XmlElement
-    Date created;
+    Seller poster;
+    
 
    
 
     public Comment() {
     }
-    public Date getCreated() {
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(String created) {
         this.created = created;
     }
-    public int getId_comment() {
-        return id_comment;
+
+    public int getId() {
+        return id;
     }
 
-    public void setId_comment(int id_comment) {
-        this.id_comment = id_comment;
-    }
-
-    public int getId_product() {
-        return id_product;
-    }
-
-    public void setId_product(int id_product) {
-        this.id_product = id_product;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getComment() {

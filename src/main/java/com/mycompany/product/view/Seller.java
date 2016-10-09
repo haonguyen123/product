@@ -21,7 +21,7 @@ public class Seller {
     @XmlElement
     String avatar;
     @XmlElement
-    String score;
+    Integer score;
     @XmlElement
     String listing;
 
@@ -52,11 +52,11 @@ public class Seller {
         this.avatar = avatar;
     }
 
-    public String getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 

@@ -5,21 +5,41 @@
  */
 package com.mycompany.product.view;
 
+import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author nguye
  */
-public class Video {
+@XmlRootElement
+public class AddProduct {
    @XmlElement
-    int id;
-    @XmlElement
-    String url;
-    @XmlElement
-    String thumb;
+   int id;
+   @XmlElement
+   String url;
+   @XmlElement
+   int code;
+   @XmlElement
+   String message;
+    public AddProduct() {
+    }
 
-    public Video() {
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public int getId() {
@@ -37,14 +57,6 @@ public class Video {
     public void setUrl(String url) {
         this.url = url;
     }
-
-    public String getThumb() {
-        return thumb;
-    }
-
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
-    }
-    
-     
+   
+   
 }
