@@ -13,15 +13,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author nguye
  */
 @XmlRootElement
-public class LikeResponse {
+public class AddProductResponse {
     @XmlElement
-    int code;
-    @XmlElement
-    String message;
-    @XmlElement
-    Like data;
+   int code;
+   @XmlElement
+   String message;
+   @XmlElement
+   AddProduct data;
 
-    public LikeResponse() {
+    public AddProductResponse() {
     }
 
     public int getCode() {
@@ -40,12 +40,12 @@ public class LikeResponse {
         this.message = message;
     }
 
-    public Like getData() {
+    public AddProduct getData() {
         return data;
     }
 
-    public void setData(Like data) {
+    public void setData(AddProduct data) {
         this.data = data;
     }
-    
+   
 }

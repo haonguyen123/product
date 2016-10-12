@@ -19,27 +19,7 @@ public class AddProduct {
    int id;
    @XmlElement
    String url;
-   @XmlElement
-   int code;
-   @XmlElement
-   String message;
     public AddProduct() {
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public int getId() {

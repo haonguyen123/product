@@ -8,8 +8,12 @@ package com.mycompany.product;
 import com.mycompany.product.view.Product;
 import com.mycompany.product.controller.add_products;
 import com.mycompany.product.view.AddProduct;
+import com.mycompany.product.view.AddProductResponse;
 import com.mycompany.product.view.Comment;
+import com.mycompany.product.view.CommentResponse;
+import com.mycompany.product.view.GetProductResponse;
 import com.mycompany.product.view.Like;
+import com.mycompany.product.view.LikeResponse;
 import com.mycompany.product.view.ReportProduct;
 import java.sql.Array;
 import java.util.List;
@@ -42,7 +46,7 @@ public class CtoFService {
 	@POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Product getproduct(@FormParam("id") int id ) {
+	public GetProductResponse getproduct(@FormParam("id") int id ) {
             add_products a = new add_products();
             return a.getproducts(id);
         }
@@ -50,17 +54,17 @@ public class CtoFService {
         @POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public AddProduct addproduct(@FormParam("name") String name, @FormParam("price") int price,@FormParam("product_size_id") int product_size_id,@FormParam("brand_id") int brand_id,@FormParam("seller_id") int seller_id,@FormParam("category_id") int category_id,@FormParam("image") String image,@FormParam("described") String described,@FormParam("ships_from") String ships_from,@FormParam("ships_from_id") String ships_from_id,@FormParam("condition") String condition,@FormParam("dimention") String dimention,@FormParam("weight") double weight) { 
+	public AddProductResponse addproduct(@FormParam("name") String name, @FormParam("price") int price,@FormParam("product_size_id") int product_size_id,@FormParam("brand_id") int brand_id,@FormParam("seller_id") int seller_id,@FormParam("category_id") int category_id,@FormParam("image") String image,@FormParam("described") String described,@FormParam("ships_from") String ships_from,@FormParam("ships_from_id") String ships_from_id,@FormParam("condition") String condition,@FormParam("dimention") String dimention,@FormParam("weight") double weight) { 
            
             add_products a = new add_products();
-             AddProduct addproduct = a.addproducts(name, price, product_size_id, brand_id, seller_id, category_id, image, described, ships_from, ships_from_id, condition, dimention, weight);
+             AddProductResponse addproduct = a.addproducts(name, price, product_size_id, brand_id, seller_id, category_id, image, described, ships_from, ships_from_id, condition, dimention, weight);
             return addproduct;
         }
         @Path("/del_products")
         @POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public AddProduct delproduct( @FormParam("id") int id) { 
+	public AddProductResponse delproduct( @FormParam("id") int id) { 
             add_products a = new add_products();
             return a.delproducts(id);
         }
@@ -68,7 +72,7 @@ public class CtoFService {
         @POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public AddProduct editproduct(@FormParam("id") int id,@FormParam("name") String name, @FormParam("price") int price,@FormParam("product_size_id") int product_size_id,@FormParam("brand_id") int brand_id,@FormParam("seller_id") int seller_id,@FormParam("category_id") int category_id,@FormParam("image") String image,@FormParam("described") String described,@FormParam("ships_from") String ships_from,@FormParam("ships_from_id") String ships_from_id,@FormParam("condition") String condition,@FormParam("dimention") String dimention,@FormParam("weight") double weight ) { 
+	public AddProductResponse editproduct(@FormParam("id") int id,@FormParam("name") String name, @FormParam("price") int price,@FormParam("product_size_id") int product_size_id,@FormParam("brand_id") int brand_id,@FormParam("seller_id") int seller_id,@FormParam("category_id") int category_id,@FormParam("image") String image,@FormParam("described") String described,@FormParam("ships_from") String ships_from,@FormParam("ships_from_id") String ships_from_id,@FormParam("condition") String condition,@FormParam("dimention") String dimention,@FormParam("weight") double weight ) { 
             add_products a = new add_products();
             return a.editproducts(name, price, product_size_id, brand_id, seller_id, category_id, image, described, ships_from, ships_from_id, condition, dimention, weight, id);
         }
@@ -76,7 +80,7 @@ public class CtoFService {
         @POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String reportproduct(@FormParam("product_id") int id,@FormParam("subject") String subject,@FormParam("details") String details) { 
+	public AddProductResponse reportproduct(@FormParam("product_id") int id,@FormParam("subject") String subject,@FormParam("details") String details) { 
             add_products a = new add_products();
             return a.reportproducts(id, subject, details);
         }
@@ -92,7 +96,7 @@ public class CtoFService {
         @POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Comment> comment(@FormParam("product_id") int id,@FormParam("comment") String comment,@FormParam("poster_id")int poster ,@FormParam("index") int index,@FormParam("count") int count) { 
+	public CommentResponse comment(@FormParam("product_id") int id,@FormParam("comment") String comment,@FormParam("poster_id")int poster ,@FormParam("index") int index,@FormParam("count") int count) { 
             add_products a = new add_products();
             return a.comment(id, comment, poster, index, count);
         }
@@ -100,7 +104,7 @@ public class CtoFService {
         @POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Comment> getallcomment(@FormParam("product_id") int id,@FormParam("index") int index,@FormParam("count") int count) { 
+	public CommentResponse getallcomment(@FormParam("product_id") int id,@FormParam("index") int index,@FormParam("count") int count) { 
             add_products a = new add_products();
             return a.getallcomment(id, index, count);
         }
@@ -108,7 +112,7 @@ public class CtoFService {
         @POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Like getallcomment(@FormParam("id") int id) { 
+	public LikeResponse getallcomment(@FormParam("id") int id) { 
             add_products a = new add_products();
             return a.likeproducts(id);
         }

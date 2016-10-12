@@ -16,14 +16,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "product")
 public class Product {
-//    @XmlElement
-//    String token;
-
-    @XmlElement(name = "id")
+    @XmlElement
     int id;
-    @XmlElement(name = "name")
+    @XmlElement
     String name;
-    @XmlElement(name = "price")
+    @XmlElement
     Double price;
     @XmlElement
     Size size;
@@ -33,7 +30,7 @@ public class Product {
     Category category;
     @XmlElement
     String image;
-    @XmlElement(name = "described")
+    @XmlElement
     String described;
     @XmlElement
     String ships_from;

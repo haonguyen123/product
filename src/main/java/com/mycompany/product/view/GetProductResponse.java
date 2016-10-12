@@ -5,6 +5,7 @@
  */
 package com.mycompany.product.view;
 
+import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,15 +14,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author nguye
  */
 @XmlRootElement
-public class LikeResponse {
-    @XmlElement
-    int code;
-    @XmlElement
-    String message;
-    @XmlElement
-    Like data;
+public class GetProductResponse {
+   @XmlElement
+   int code;
+   @XmlElement
+   String message;
+   @XmlElement
+   Product data;
 
-    public LikeResponse() {
+    public GetProductResponse() {
     }
 
     public int getCode() {
@@ -40,12 +41,12 @@ public class LikeResponse {
         this.message = message;
     }
 
-    public Like getData() {
+    public Product getData() {
         return data;
     }
 
-    public void setData(Like data) {
+    public void setData(Product data) {
         this.data = data;
     }
-    
+   
 }

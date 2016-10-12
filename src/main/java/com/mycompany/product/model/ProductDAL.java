@@ -7,11 +7,15 @@ package com.mycompany.product.model;
 
 
 import com.mycompany.product.view.AddProduct;
+import com.mycompany.product.view.AddProductResponse;
 import com.mycompany.product.view.Brand;
 import com.mycompany.product.view.Category;
 import com.mycompany.product.view.Comment;
+import com.mycompany.product.view.CommentResponse;
 import com.mycompany.product.view.Condition;
+import com.mycompany.product.view.GetProductResponse;
 import com.mycompany.product.view.Like;
+import com.mycompany.product.view.LikeResponse;
 import com.mycompany.product.view.Product;
 import com.mycompany.product.view.ReportProduct;
 import com.mycompany.product.view.Seller;
@@ -85,14 +89,18 @@ public class ProductDAL extends connect {
         }
         return all;
     }
-    public Product get_products(int id) {
-        Product product = new Product();
+    public GetProductResponse get_products(int id) {
+        GetProductResponse getproductresponse = new GetProductResponse();
         try {
             getConnect();
             PreparedStatement ps = con.prepareStatement(GET_ID);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
+            
             if(rs!=null && rs.next()){
+                getproductresponse.setCode(1000);
+                getproductresponse.setMessage("OK");
+                Product product = new Product();
                 Size size = new Size();
                 Seller seller = new Seller();
                 Brand brand = new Brand();
@@ -139,15 +147,24 @@ public class ProductDAL extends connect {
                 product.setUrl(rs.getNString("url"));
                 product.setWeight(rs.getDouble("weight"));
                 product.setDimention("dimention");
+                getproductresponse.setData(product);
             }
+            else{
+                getproductresponse.setCode(9992);
+                getproductresponse.setMessage("Product is not existed");
+            }
+            
         }
         catch(Exception e){
             e.printStackTrace();
+             getproductresponse.setCode(9999);
+             getproductresponse.setMessage("Exception error.");
         }
-        return product;
+        return getproductresponse;
     }
-    public AddProduct  add_products(String name, int price, int product_size_id, int brand_id,int seller_id, int category_id, String image, String described, String ships_from, String ships_from_id, String condition, String dimention, double weight) {
-        AddProduct addproduct = new AddProduct();
+    public AddProductResponse  add_products(String name, int price, int product_size_id, int brand_id,int seller_id, int category_id, String image, String described, String ships_from, String ships_from_id, String condition, String dimention, double weight) {
+        AddProductResponse addproductresponse = new AddProductResponse();
+        
         try {
             getConnect();
             PreparedStatement ps = con.prepareStatement(ADD_ID);
@@ -169,23 +186,26 @@ public class ProductDAL extends connect {
                 PreparedStatement ps1 = con.prepareStatement(MAX_ID);
                 ResultSet rs1 = ps1.executeQuery();
                 if(rs1!=null && rs1.next()){
+                addproductresponse.setCode(1000);
+                addproductresponse.setMessage("OK");
+                AddProduct addproduct = new AddProduct();
                 addproduct.setId(rs1.getInt("id"));
-                addproduct.setMessage("Add product sucessfull");
                 addproduct.setUrl("http://localhost:8084/product/product/api/get_products/"+(rs1.getInt("id")));
+                addproductresponse.setData(addproduct);
             }
                
-            }
-            else {
-                addproduct.setMessage("Add false");
             }
         }
         catch(Exception e){
             e.printStackTrace();
+            addproductresponse.setCode(9999);
+            addproductresponse.setMessage("Exception error.");
         }
-       return addproduct;
+       return addproductresponse;
     }
-    public AddProduct edit_products(String name, int price, int product_size_id, int brand_id,int seller_id, int category_id, String image, String described, String ships_from, String ships_from_id, String condition, String dimention, double weight,int id) {
-        AddProduct addproduct = new AddProduct();
+    public AddProductResponse edit_products(String name, int price, int product_size_id, int brand_id,int seller_id, int category_id, String image, String described, String ships_from, String ships_from_id, String condition, String dimention, double weight,int id) {
+        AddProductResponse addproductresponse = new AddProductResponse();
+        
         try {
             getConnect();
             PreparedStatement ps = con.prepareStatement(EDIT_ID);
@@ -205,37 +225,43 @@ public class ProductDAL extends connect {
             ps.setInt(14, id);
             int rs = ps.executeUpdate();
             if(rs > 0){
+                addproductresponse.setCode(1000);
+                addproductresponse.setMessage("OK");
+                AddProduct addproduct = new AddProduct();
                 addproduct.setId(id);
-                addproduct.setMessage("Edit product sucessfull");
                 addproduct.setUrl("http://localhost:8084/product/product/api/get_products/"+id); 
+                addproductresponse.setData(addproduct);
                 
             }
-            else {
-                 addproduct.setMessage("Edit false");; 
-            }
+            
         }
         catch(Exception e){
             e.printStackTrace();
+            addproductresponse.setCode(9999);
+            addproductresponse.setMessage("Exception error.");
         }
-       return addproduct;
+       return addproductresponse;
     }
-    public AddProduct del_products(int id) {
-        AddProduct addproduct = new AddProduct();
+    public AddProductResponse del_products(int id) {
+        AddProductResponse addproduct = new AddProductResponse();
         try {
             getConnect();
             PreparedStatement ps = con.prepareStatement(DEL_ID);
             ps.setInt(1,id);
             int rs = ps.executeUpdate();
             if(rs > 0){
-                addproduct.setId(id);
-                addproduct.setMessage("Delete product sucessfull");
+                addproduct.setCode(1000);
+                addproduct.setMessage("OK");
             }
             else {
-                 addproduct.setMessage("Delete product false");
+                addproduct.setCode(9992);
+                addproduct.setMessage("Product is not existed");
             }
         }
         catch(Exception e){
             e.printStackTrace();
+            addproduct.setCode(9999);
+            addproduct.setMessage("Exception error.");
         }
        return addproduct;
     }
@@ -261,8 +287,8 @@ public class ProductDAL extends connect {
         }
         return all;
     }
-    public String report_products(int id, String subject, String details) {
-        String message = "Repost product false";
+    public AddProductResponse report_products(int id, String subject, String details) {
+        AddProductResponse report = new AddProductResponse();
         try {
             getConnect();
             PreparedStatement ps = con.prepareStatement(REPORT_PRODUCT);
@@ -271,19 +297,19 @@ public class ProductDAL extends connect {
             ps.setNString(3, details);
             int rs = ps.executeUpdate();
             if(rs > 0){
-                message = "Repost product sucessfull";
-            }
-            else {
-                 message ="Repost product false";
+                report.setCode(1000);
+                report.setMessage("OK");
             }
         }
         catch(Exception e){
             e.printStackTrace();
+            report.setCode(9999);
+            report.setMessage("Exception error.");
         }
-       return message;
+       return report;
     }
-    public List<Comment> set_comment_products(int id, String comment,int poster , int index, int count) {
-        List<Comment> all = new ArrayList<Comment>();
+    public CommentResponse set_comment_products(int id, String comment,int poster , int index, int count) {
+        CommentResponse reponse = new CommentResponse();
         try {
             getConnect();
             PreparedStatement ps = con.prepareStatement(COMMENT);
@@ -298,12 +324,14 @@ public class ProductDAL extends connect {
             ps1.setInt(3, count);
             ResultSet rs1 = ps1.executeQuery();
             if(rs1!=null ){
+                reponse.setCode(1000);
+                reponse.setMessage("OK");
+                List<Comment> all = new ArrayList<Comment>();
                 while( rs1.next()){
                 Comment comment1 = new Comment();
                 comment1.setId(rs1.getInt("id_comment"));
                 comment1.setComment(rs1.getString("comment"));
                 comment1.setCreated(rs1.getString("created"));
-                comment1.setMessage("Set comment products sucessfull");
                 Seller seller = new Seller();
                 seller.setId(rs1.getInt("poster_id"));
                 seller.setName(rs1.getString("seller_name"));
@@ -311,21 +339,20 @@ public class ProductDAL extends connect {
                 comment1.setPoster(seller);
                 all.add(comment1);
                 }
+                reponse.setData(all);
             }
-            }
-            else {
-                Comment comment1 = new Comment();
-                comment1.setMessage("Set comment products sucessfull");
-                all.add(comment1);
             }
         }
         catch(Exception e){
             e.printStackTrace();
+            reponse.setCode(9999);
+            reponse.setMessage("Exception error.");
         }
-       return all;
+       return reponse;
     }
-    public List<Comment> get_comment_products(int id, int index,int count) {
-        List<Comment> all = new ArrayList<Comment>();
+    public CommentResponse get_comment_products(int id, int index,int count) {
+        CommentResponse response = new CommentResponse();
+        
         try {
             getConnect();
             PreparedStatement ps = con.prepareStatement(LIST_COMMENT);
@@ -334,13 +361,15 @@ public class ProductDAL extends connect {
             ps.setInt(3, count);
             ResultSet rs = ps.executeQuery();
             if(rs!=null ){
+                response.setCode(1000);
+                response.setMessage("OK");
+                List<Comment> all = new ArrayList<Comment>();
                 while( rs.next()){
                     
                 Comment comment = new Comment();
                 comment.setId(rs.getInt("id_comment"));
                 comment.setComment(rs.getString("comment"));
                 comment.setCreated(rs.getString("created"));
-                comment.setMessage("Get comment product sucessfull");
                 Seller seller = new Seller();
                 seller.setId(rs.getInt("poster_id"));
                 seller.setName(rs.getString("seller_name"));
@@ -348,39 +377,52 @@ public class ProductDAL extends connect {
                 comment.setPoster(seller);
                 all.add(comment);
                 }
+                response.setData(all);
             }
             else{
-                Comment comment = new Comment();
-                comment.setMessage("Get comment product false");
-                all.add(comment);
+                response.setCode(9992);
+                response.setMessage("Product is not existed");
             }
             getClose();
         }
         catch(Exception e){
             e.printStackTrace();
+            response.setCode(9999);
+            response.setMessage("Exception error.");
         }
-        return all;
+        return response;
     }
-    public Like like_products(int id) {
-        Like like = new Like();
+    public LikeResponse like_products(int id) {
+        LikeResponse likeresponse = new LikeResponse();
+        
         try {
             getConnect();
             PreparedStatement ps = con.prepareStatement(GET_ID);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs!=null && rs.next()){
+                likeresponse.setCode(1000);
+                likeresponse.setMessage("OK");
+                Like like = new Like();
                 like.setLike(rs.getInt("like"));
+                likeresponse.setData(like);
+            }
+            else {
+                likeresponse.setCode(9992);
+                likeresponse.setMessage("Product is not existed");
             }
         }
         catch(Exception e){
             e.printStackTrace();
+            likeresponse.setCode(9999);
+            likeresponse.setMessage("Exception error.");
         }
-        return like;
+        return likeresponse;
     }
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
        ProductDAL pro = new ProductDAL();
        //Product a = pro.get_products(3);
-      List<Comment> comment = pro.get_comment_products(1, 0, 10);
-        System.out.println(comment.get(1).getCreated() );
+//      List<Comment> comment = pro.get_comment_products(1, 0, 10);
+//        System.out.println(comment.get(1).getCreated() );
     }
 }

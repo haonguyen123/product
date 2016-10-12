@@ -18,8 +18,6 @@ public class Comment {
     @XmlElement
     int id;
     @XmlElement
-    String message;
-    @XmlElement
     String comment;
     @XmlElement
     String created;
@@ -32,13 +30,6 @@ public class Comment {
     public Comment() {
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
     
     public String getCreated() {
         return created;
